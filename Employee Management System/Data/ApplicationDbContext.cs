@@ -1,0 +1,35 @@
+﻿using Employee_Management_System.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+
+namespace Employee_Management_System.Data
+{
+    public class ApplicationDbContext : IdentityDbContext
+    {
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+            : base(options)
+        {
+        }
+
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<PerformanceReview> PerformanceReviews { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<PerformanceReview>()
+                .HasOne(pr => pr.Employee)
+                .WithMany(e => e.PerformanceReviews)
+                .HasForeignKey(pr => pr.EmployeeId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<PerformanceReview>()
+                .HasOne(pr => pr.Reviewer)
+                .WithMany()
+                .HasForeignKey(pr => pr.ReviewerId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+        }
+    }
+}
