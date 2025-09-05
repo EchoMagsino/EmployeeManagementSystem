@@ -31,5 +31,6 @@ namespace Employee_Management_System.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
         }
+        public DbSet<Employee_Management_System.Models.LeaveRequest> LeaveRequest { get; set; } = default!;
     }
 }

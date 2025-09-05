@@ -11,6 +11,6 @@
         public string ApproverComments { get; set; }
 
 
-        public Employee Employee { get; set; }
+        public Employee? Employee { get; set; }
     }
 }

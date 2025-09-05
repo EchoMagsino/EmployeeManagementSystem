@@ -15,9 +15,9 @@
         public bool IsActive { get; set; }
 
 
-        public ICollection<LeaveRequest> LeaveRequests { get; set; }
-        public ICollection<PerformanceReview> PerformanceReviews { get; set; }
-        public ICollection<Document> Documents { get; set; }
+        public ICollection<LeaveRequest>? LeaveRequests { get; set; }
+        public ICollection<PerformanceReview>? PerformanceReviews { get; set; }
+        public ICollection<Document>? Documents { get; set; }
         
     }
 }
