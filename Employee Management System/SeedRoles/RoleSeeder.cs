@@ -7,7 +7,7 @@ namespace Employee_Management_System.SeedRoles
 
         public static async Task SeedRolesAsync(IServiceProvider serviceProvider)
         {
-            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+           var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             string[] roles = { "User", "Admin", "HR", "Manager" };
 
             foreach (var role in roles)
