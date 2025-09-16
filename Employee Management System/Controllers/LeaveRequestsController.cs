@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Employee_Management_System.Data;
 using Employee_Management_System.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Employee_Management_System.Controllers
 {
+   
     public class LeaveRequestsController : Controller
     {
         private readonly ApplicationDbContext _context;

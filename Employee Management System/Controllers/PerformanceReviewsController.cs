@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Employee_Management_System.Controllers
 {
-    [Authorize(Roles = "HR, Manager")]
+   
     public class PerformanceReviewsController : Controller
     {
         private readonly ApplicationDbContext _context;
