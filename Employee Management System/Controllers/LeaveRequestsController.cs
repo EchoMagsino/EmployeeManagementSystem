@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Employee_Management_System.Controllers
 {
-   
+  
     public class LeaveRequestsController : Controller
     {
         private readonly ApplicationDbContext _context;
