@@ -7,16 +7,18 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Employee_Management_System.Data;
 using Employee_Management_System.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace Employee_Management_System.Controllers
 {
     public class EmployeesController : Controller
     {
         private readonly ApplicationDbContext _context;
-
-        public EmployeesController(ApplicationDbContext context)
+        private readonly UserManager<IdentityUser> _userManager;
+        public EmployeesController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Employees
@@ -99,6 +101,32 @@ namespace Employee_Management_System.Controllers
                 {
                     _context.Update(employee);
                     await _context.SaveChangesAsync();
+
+                    var user = await _userManager.FindByEmailAsync(employee.Email);
+
+                    if (user != null)
+                    {
+                        var currentRoles = await _userManager.GetRolesAsync(user);
+
+                        if (employee.Role == "Manager" && !currentRoles.Contains("Manager"))
+                        {
+                            await _userManager.AddToRoleAsync(user, "Manager");
+                            await _userManager.RemoveFromRoleAsync(user, "Employee");
+
+                        }
+                        else if (employee.Role == "HR" && !currentRoles.Contains("HR"))
+                        {
+                            await _userManager.AddToRoleAsync(user, "HR");
+                            await _userManager.RemoveFromRoleAsync(user, "Employee");
+                        }
+
+
+                        else if (employee.Role == "Employee" && !currentRoles.Contains("Employee"))
+                        {
+                            await _userManager.AddToRoleAsync(user, "Employee");
+                            await _userManager.RemoveFromRoleAsync(user, "Manager");
+                        }
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
