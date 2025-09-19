@@ -158,6 +158,9 @@ namespace Employee_Management_System.Controllers
         // GET: Employees/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+
+
+
             if (id == null)
             {
                 return NotFound();
@@ -178,14 +181,20 @@ namespace Employee_Management_System.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var employee = await _context.Employees.FindAsync(id);
-            if (employee != null)
-            {
-                _context.Employees.Remove(employee);
-            }
+            var employee = _context.Employees.Find(id);
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            if (employee == null)
+                return NotFound();
+
+            var reviews = _context.PerformanceReviews
+                .Where(r => r.EmployeeId == id)
+                .ToList();
+
+            _context.PerformanceReviews.RemoveRange(reviews);
+            _context.Employees.Remove(employee);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
         }
 
         private bool EmployeeExists(int id)

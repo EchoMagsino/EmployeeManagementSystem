@@ -20,7 +20,7 @@ namespace Employee_Management_System.Data
 
             modelBuilder.Entity<PerformanceReview>()
                 .HasOne(pr => pr.Employee)
-                .WithMany(e => e.PerformanceReviews)
+                .WithMany(e => e.PerformanceReviews) 
                 .HasForeignKey(pr => pr.EmployeeId)
                 .OnDelete(DeleteBehavior.Cascade);
 

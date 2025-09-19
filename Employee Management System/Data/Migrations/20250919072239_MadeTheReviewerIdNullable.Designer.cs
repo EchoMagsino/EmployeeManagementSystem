@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Employee_Management_System.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250919053608_MadeTheReviewerIdNullable")]
+    [Migration("20250919072239_MadeTheReviewerIdNullable")]
     partial class MadeTheReviewerIdNullable
     {
         /// <inheritdoc />
@@ -71,10 +71,6 @@ namespace Employee_Management_System.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EmployeeNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -403,13 +399,13 @@ namespace Employee_Management_System.Data.Migrations
                     b.HasOne("Employee_Management_System.Models.Employee", "Employee")
                         .WithMany("PerformanceReviews")
                         .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Employee_Management_System.Models.Employee", "Reviewer")
                         .WithMany()
                         .HasForeignKey("ReviewerId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Employee");
 
