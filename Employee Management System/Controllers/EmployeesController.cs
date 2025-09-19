@@ -22,9 +22,20 @@ namespace Employee_Management_System.Controllers
         }
 
         // GET: Employees
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            return View(await _context.Employees.ToListAsync());
+            var employees = from e in _context.Employees select e;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                employees = employees.Where(e =>
+                e.FirstName.Contains(searchString) ||
+                e.LastName.Contains(searchString) ||
+                (e.FirstName+ " " +e.LastName).Contains(searchString)
+                );
+                
+            }
+            return View(await employees.ToListAsync());
         }
 
         // GET: Employees/Details/5
