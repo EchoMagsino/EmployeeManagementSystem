@@ -6,7 +6,7 @@ namespace Employee_Management_System.Models
     {
         public int Id { get; set; }
         public int EmployeeId { get; set; }
-        public int ReviewerId { get; set; }
+        public int? ReviewerId { get; set; }
         public DateTime ReviewDate { get; set; }
         public string Comments { get; set; }
 
