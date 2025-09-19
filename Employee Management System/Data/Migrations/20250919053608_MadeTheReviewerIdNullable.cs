@@ -24,7 +24,7 @@ namespace Employee_Management_System.Data.Migrations
                 column: "EmployeeId",
                 principalTable: "Employees",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
+                onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_PerformanceReviews_Employees_ReviewerId",
@@ -32,7 +32,7 @@ namespace Employee_Management_System.Data.Migrations
                 column: "ReviewerId",
                 principalTable: "Employees",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
+                onDelete: ReferentialAction.SetNull);
         }
 
         /// <inheritdoc />

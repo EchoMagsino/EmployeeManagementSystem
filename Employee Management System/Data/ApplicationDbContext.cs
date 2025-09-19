@@ -22,13 +22,13 @@ namespace Employee_Management_System.Data
                 .HasOne(pr => pr.Employee)
                 .WithMany(e => e.PerformanceReviews)
                 .HasForeignKey(pr => pr.EmployeeId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<PerformanceReview>()
                 .HasOne(pr => pr.Reviewer)
                 .WithMany()
                 .HasForeignKey(pr => pr.ReviewerId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.SetNull);
 
         }
         public DbSet<Employee_Management_System.Models.LeaveRequest> LeaveRequest { get; set; } = default!;
