@@ -30,6 +30,12 @@ namespace Employee_Management_System.Data
                 .HasForeignKey(pr => pr.ReviewerId)
                 .OnDelete(DeleteBehavior.SetNull);
 
+            modelBuilder.Entity<LeaveRequest>()
+                .HasOne(lr => lr.Employee)
+                .WithMany(e => e.LeaveRequests)
+                .HasForeignKey(lr => lr.EmployeeId)
+                .OnDelete(DeleteBehavior.Cascade);
+
         }
         public DbSet<Employee_Management_System.Models.LeaveRequest> LeaveRequest { get; set; } = default!;
     }
