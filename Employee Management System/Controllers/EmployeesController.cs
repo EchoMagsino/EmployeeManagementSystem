@@ -31,9 +31,9 @@ namespace Employee_Management_System.Controllers
                 employees = employees.Where(e =>
                 e.FirstName.Contains(searchString) ||
                 e.LastName.Contains(searchString) ||
-                (e.FirstName+ " " +e.LastName).Contains(searchString)
+                (e.FirstName + " " + e.LastName).Contains(searchString)
                 );
-                
+
             }
             return View(await employees.ToListAsync());
         }
@@ -201,5 +201,36 @@ namespace Employee_Management_System.Controllers
         {
             return _context.Employees.Any(e => e.Id == id);
         }
+
+        [HttpGet]
+        public JsonResult LiveSearch(string term)
+        {
+            if (string.IsNullOrWhiteSpace(term))
+            {
+                return Json(new List<object>()); // Return empty list if term is null or blank
+            }
+
+            var results = _context.Employees
+                .AsEnumerable()
+                .Where(e => (e.FirstName + " " + e.LastName).ToLower().Contains(term.ToLower()))
+                .Select(e => new {
+                    id = e.Id,
+                    firstName = e.FirstName,
+                    lastName = e.LastName,
+                    email = e.Email,
+                    phoneNumber = e.PhoneNumber,
+                    department = e.Department,
+                    position = e.Position,
+                    hireDate = e.HireDate.ToString("yyyy-MM-dd"),
+                    role = e.Role,
+                    isActive = e.IsActive
+                })
+                .ToList();
+
+            return Json(results);
+        }
+
+
+
     }
 }
