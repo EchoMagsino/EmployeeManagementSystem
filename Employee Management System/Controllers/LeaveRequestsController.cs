@@ -22,11 +22,18 @@ namespace Employee_Management_System.Controllers
         }
 
         // GET: LeaveRequests
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? term)
         {
-            var applicationDbContext = _context.LeaveRequest.Include(l => l.Employee);
-            return View(await applicationDbContext.ToListAsync());
+            IQueryable<LeaveRequest> leaveRequests = _context.LeaveRequest.Include(lr => lr.Employee);
+
+            if (term.HasValue)
+            {
+                leaveRequests = leaveRequests.Where(lr => lr.EmployeeId == term.Value);
+            }
+
+            return View(await leaveRequests.ToListAsync());
         }
+
 
         // GET: LeaveRequests/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -161,6 +168,42 @@ namespace Employee_Management_System.Controllers
         private bool LeaveRequestExists(int id)
         {
             return _context.LeaveRequest.Any(e => e.Id == id);
+        }
+
+
+        [HttpGet]
+        public JsonResult LiveSearch(string term)
+        {
+            if (string.IsNullOrWhiteSpace(term))
+            {
+                return Json(new List<object>());
+            }
+
+            bool isNumeric = int.TryParse(term, out int employeeId);
+
+            if (!isNumeric)
+            {
+                return Json(new List<object>()); // Only allow numeric search
+            }
+
+            var results = _context.LeaveRequest
+                .Include(lr => lr.Employee)
+                .Where(lr => lr.EmployeeId == employeeId)
+                .Select(lr => new
+                {
+                    leaveRequestId = lr.Id,
+                    startDate = lr.StartDate.ToString("yyyy-MM-dd"),
+                    endDate = lr.EndDate.ToString("yyyy-MM-dd"),
+                    leaveType = lr.LeaveType,
+                    status = lr.Status,
+                    approverComments = lr.ApproverComments,
+                    employeeId = lr.EmployeeId,
+                    employeeName = lr.Employee.FirstName + " " + lr.Employee.LastName
+                })
+                .ToList<object>();
+
+            return Json(results);
+
         }
     }
 }
