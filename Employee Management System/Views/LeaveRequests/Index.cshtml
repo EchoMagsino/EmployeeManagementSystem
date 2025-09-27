@@ -61,5 +61,16 @@
             </td>
         </tr>
 }
+
+        <form asp-controller="LeaveRequests" asp-action="Index" method="get">
+
+            <p>
+                Live Search: <input type="number" name="term" placeholder="Type employee's number ..." />
+                <input type="submit" value="search" />
+            </p>
+
+        </form>
+
+       
     </tbody>
 </table>
