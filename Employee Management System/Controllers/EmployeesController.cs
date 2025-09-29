@@ -207,13 +207,15 @@ namespace Employee_Management_System.Controllers
         {
             if (string.IsNullOrWhiteSpace(term))
             {
-                return Json(new List<object>()); // Return empty list if term is null or blank
+                return Json(new List<object>());
             }
 
+            term = term.ToLower();
+
             var results = _context.Employees
-                .AsEnumerable()
-                .Where(e => (e.FirstName + " " + e.LastName).ToLower().Contains(term.ToLower()))
-                .Select(e => new {
+                .Where(e => (e.FirstName + " " + e.LastName).ToLower().Contains(term))
+                .Select(e => new
+                {
                     id = e.Id,
                     firstName = e.FirstName,
                     lastName = e.LastName,
@@ -229,8 +231,5 @@ namespace Employee_Management_System.Controllers
 
             return Json(results);
         }
-
-
-
     }
 }

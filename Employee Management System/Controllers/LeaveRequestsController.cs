@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Employee_Management_System.Controllers
 {
-  
+
     public class LeaveRequestsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -179,31 +179,37 @@ namespace Employee_Management_System.Controllers
                 return Json(new List<object>());
             }
 
-            bool isNumeric = int.TryParse(term, out int employeeId);
+            var query = _context.LeaveRequest.Include(lr => lr.Employee).AsQueryable();
 
-            if (!isNumeric)
+            if (int.TryParse(term, out int employeeId))
             {
-                return Json(new List<object>()); // Only allow numeric search
+                query = query.Where(lr => lr.EmployeeId == employeeId);
+            }
+            else
+            {
+                query = query.Where(lr =>
+                    lr.LeaveType.Contains(term) ||
+                    lr.Status.Contains(term) ||
+                    lr.ApproverComments.Contains(term) ||
+                    lr.Employee.FirstName.Contains(term) ||
+                    lr.Employee.LastName.Contains(term)
+                );
             }
 
-            var results = _context.LeaveRequest
-                .Include(lr => lr.Employee)
-                .Where(lr => lr.EmployeeId == employeeId)
-                .Select(lr => new
-                {
-                    leaveRequestId = lr.Id,
-                    startDate = lr.StartDate.ToString("yyyy-MM-dd"),
-                    endDate = lr.EndDate.ToString("yyyy-MM-dd"),
-                    leaveType = lr.LeaveType,
-                    status = lr.Status,
-                    approverComments = lr.ApproverComments,
-                    employeeId = lr.EmployeeId,
-                    employeeName = lr.Employee.FirstName + " " + lr.Employee.LastName
-                })
-                .ToList<object>();
+            var results = query.Select(lr => new
+            {
+                leaveRequestId = lr.Id,
+                startDate = lr.StartDate.ToString("yyyy-MM-dd"),
+                endDate = lr.EndDate.ToString("yyyy-MM-dd"),
+                leaveType = lr.LeaveType,
+                status = lr.Status,
+                approverComments = lr.ApproverComments,
+                employeeId = lr.EmployeeId,
+                employeeName = lr.Employee.FirstName + " " + lr.Employee.LastName
+            }).ToList();
 
             return Json(results);
-
         }
+
     }
 }
