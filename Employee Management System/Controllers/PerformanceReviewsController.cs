@@ -22,10 +22,16 @@ namespace Employee_Management_System.Controllers
         }
 
         // GET: PerformanceReviews
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? term)
         {
-            var applicationDbContext = _context.PerformanceReviews.Include(p => p.Employee).Include(p => p.Reviewer);
-            return View(await applicationDbContext.ToListAsync());
+            IQueryable<PerformanceReview> performanceReviews = _context.PerformanceReviews.Include(pr => pr.Employee);
+
+            if (term.HasValue)
+            {
+                performanceReviews = performanceReviews.Where(pr => pr.EmployeeId == term.Value);
+            }
+
+            return View(await performanceReviews.ToListAsync());
         }
 
         // GET: PerformanceReviews/Details/5
@@ -180,5 +186,22 @@ namespace Employee_Management_System.Controllers
         {
             return _context.PerformanceReviews.Any(e => e.Id == id);
         }
+
+      /*  [HttpGet]
+
+        public JsonResult LiveSearch(string term)
+        {
+            if (string.IsNullOrWhiteSpace(term))
+            {
+                return Json(new List<object>());
+            }
+
+            var query = _context.PerformanceReviews.Include(pr => pr.Employee).AsQueryable();
+
+            if (int.TryParse(term, out int employeeId))
+            {
+
+            }
+        } */
     }
 }

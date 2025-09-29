@@ -9,6 +9,16 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+<form asp-controller="LeaveRequests" asp-action="Index" method="get">
+
+    <p>
+         <input type="number" name="term" id="liveSearch" placeholder="Type employee's number ..." />
+        <input type="submit" value="search" />
+    </p>
+
+</form>
+
 <table class="table" id="leaveRequestTable">
     <thead>
         <tr>
@@ -62,14 +72,7 @@
         </tr>
 }
 
-        <form asp-controller="LeaveRequests" asp-action="Index" method="get">
-
-            <p>
-                Live Search: <input type="text" name="term" id="liveSearch" placeholder="Type employee's number ..." />
-                <input type="submit" value="search" />
-            </p>
-
-        </form>
+        
 
        
     </tbody>
