@@ -21,3 +21,8 @@ body {
   margin-bottom: 60px;
 }
 
+.nav-link.active {
+    color: white !important;
+    font-weight: bold;
+    
+}
