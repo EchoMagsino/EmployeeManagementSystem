@@ -13,7 +13,7 @@
 </p>
 <table class="table" id="employeeTable">
     <thead>
-        <tr>
+        <tr class="table-primary">
             <th>
                 @Html.DisplayNameFor(model => model.Id)
             </th>
@@ -49,7 +49,7 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
+        <tr class="table-light">
             <td>
                 @Html.DisplayFor(modelItem => item.Id)
             </td>
@@ -81,9 +81,9 @@
                 @Html.DisplayFor(modelItem => item.IsActive)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a class="badge bg-primary" asp-action="Edit" asp-route-id="@item.Id">Edit</a> 
+                    <a class="badge bg-primary" asp-action="Details" asp-route-id="@item.Id">Details</a> 
+                    <a class="badge bg-primary" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }
