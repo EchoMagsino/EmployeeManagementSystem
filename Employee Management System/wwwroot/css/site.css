@@ -26,3 +26,13 @@ body {
     font-weight: bold;
     
 }
+
+.btn btn-primary {
+    text-decoration: none;
+    color: white !important;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
