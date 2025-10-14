@@ -19,7 +19,7 @@ html {
 
 body {
     margin-bottom: 60px;
-    background-image: url('../images/officebg.jpg');
+    background-image: url('../images/officeworkplacewhitetheme.jpg');
     background-size: cover;
 }
 
@@ -48,5 +48,32 @@ h1 {
 }
 
 .display-4 {
-    color: white;
+    color: black;
+    margin-top: 30px;
+    background-size: 10px;
+}
+
+.Employee-container {
+    display: flex;
+    justify-content: center; /* centers the items horizontally */
+    gap: 40px; /* adds space between each icon block */
+    margin-top: 20px;
+    flex-wrap: wrap; /* allows wrapping on smaller screens */
+}
+
+.Employee-Icon {
+    text-align: center;
+    color: black;
+    background-color: cadetblue;
+    border-radius: 5%;
+}
+
+    .Employee-Icon img {
+        width: 100px;
+        height: auto;
+    }
+
+.Employee-Icon:hover {
+    background-color: navajowhite;
+    cursor: pointer;
 }
