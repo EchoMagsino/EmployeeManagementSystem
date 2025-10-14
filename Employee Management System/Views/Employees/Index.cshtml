@@ -11,6 +11,16 @@
     <a class="btn btn-primary" asp-action="Create">Create New</a>
 
 </p>
+
+<form asp-controller="Employees" asp-action="Index" method="get">
+
+    <p>
+        Live Search: <input type="text" id="liveSearch" placeholder="Type employee name..." />
+        <input class="submit-button" type="submit" name="searchTerm" value="search" />
+    </p>
+
+</form>
+
 <table class="table" id="employeeTable">
     <thead>
         <tr class="table-primary">
@@ -87,14 +97,8 @@
             </td>
         </tr>
 }
-         <form asp-controller ="Employees" asp-action="Index" method="get">
-
-            <p>
-                Live Search: <input type="text" id="liveSearch" placeholder="Type employee name..." />
-                <input type="submit" name="searchTerm" value="search"/>
-            </p>
-
-         </form>
+       
          
     </tbody>
 </table>
+

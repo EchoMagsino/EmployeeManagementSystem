@@ -40,3 +40,7 @@ h1 {
 .badge.bg-primary {
     text-decoration: none !important;
 }
+
+.submit-button {
+    border-radius: 3px;
+}
